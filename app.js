@@ -89,7 +89,7 @@ let tasks = {};
   const inputTitle = form.elements['title']
   const inputBody = form.elements['body']
   const themeSelector = document.getElementById('themeSelect')
-
+  const currentTheme = localStorage.getItem('theme')
 
 
 
@@ -212,14 +212,17 @@ let tasks = {};
     setTheme(selectedTheme)
   }
 
-  function setTheme(name) {
+  function setTheme(name = "default") {
+    if (currentTheme) {
+      themeSelector.value = currentTheme
+    }
     const selectedThemeObject = themes[name]
     Object.entries(selectedThemeObject).forEach(([key, value]) => {
       document.documentElement.style.setProperty(key, value)
     })
+    localStorage.setItem('theme', name)
   }
 
-
-
-
+  setTheme(currentTheme)
+  
 })(tasks);
